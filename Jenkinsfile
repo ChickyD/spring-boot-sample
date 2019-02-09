@@ -15,7 +15,7 @@ node {
 
  stage("test") {
   env.K6CLOUD_TOKEN = "0e2bcf09026d2179120ca6768b0359e0e9347a4ceeec93734d6540ca105cfd45"
-   bat 'k6.exe run --quiet -o cloud github.com/ChickyD/spring-boot-sample/master/main.js'
+   bat 'k6.exe run --quiet -o cloud github.com/ChickyD/spring-boot-sample/main.js'
  }
 
  stage("Done") {
