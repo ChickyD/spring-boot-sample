@@ -12,7 +12,11 @@ node {
     }
 
     stage('Deploy') {
-        bat 'mvn -e spring-boot:run'
+                        bat "pid=\$(lsof -i:8989 -t); kill -TERM \$pid "
+                          + "|| kill -KILL \$pid"
+                        withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
+                            bat 'mvn spring-boot:run -Dserver.port=8989 &'
+
     }
 
     stage ("test") {
