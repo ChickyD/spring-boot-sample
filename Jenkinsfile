@@ -16,7 +16,7 @@ node {
    def jarName = "spring-boot-sample.jar"
    echo "the application is deploying ${jarName}"
    // NOTE : CREATE your deployemnt JOB, where it can take parameters whoch is the jar name to fetch from jenkins workspace
-   build job: 'ApplicationToDev', parameters: [
+   build job: 'spring-boot-sample', parameters: [
     [$class: 'StringParameterValue', name: 'jarName', value: jarName]
    ]
    echo 'the application is deployed !'
