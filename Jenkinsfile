@@ -1,23 +1,6 @@
 node {
-    stage('Configure') {
-        env.PATH = "${tool 'maven-3.3.9'}/bin:${env.PATH}"
-        version = '1.0.' + env.BUILD_NUMBER
-        currentBuild.displayName = version
-
-        properties([
-                buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')),
-                [$class: 'GithubProjectProperty', displayName: '', projectUrlStr: 'https://github.com/bertjan/spring-boot-sample/'],
-                pipelineTriggers([[$class: 'GitHubPushTrigger']])
-            ])
-    }
-
     stage('Checkout') {
-        git 'https://github.com/ChickyD/spring-boot-sample'
-    }
-
-    stage('Version') {
-        sh "echo \'\ninfo.build.version=\'$version >> src/main/resources/application.properties || true"
-        sh "mvn -B -V -U -e versions:set -DnewVersion=$version"
+         git 'https://github.com/ChickyD/spring-boot-sample'
     }
 
     stage('Build') {
@@ -29,7 +12,19 @@ node {
     }
 
     stage('Deploy') {
-        // Depends on the 'Credentials Binding Plugin'
         sh 'mvn -e spring-boot:run'
     }
+
+    stage ("test") {
+            env.K6CLOUD_TOKEN="0e2bcf09026d2179120ca6768b0359e0e9347a4ceeec93734d6540ca105cfd45"
+            if (isUnix()) {
+                sh "k6 run --quiet -o cloud github.com/loadimpact/k6-circleci-example/loadtests/main.js"
+            } else {
+                bat 'k6.exe run --quiet -o cloud github.com/loadimpact/k6-circleci-example/loadtests/main.js'
+            }
+        }
+
+        stage ("Done") {
+        }
+
 }
