@@ -11,13 +11,11 @@ node {
         junit allowEmptyResults: true, testResults: '**/target/**/TEST*.xml'
     }
 
-    stage('Deploy') {
-                        bat "pid=\$(lsof -i:8989 -t); kill -TERM \$pid "
-                          + "|| kill -KILL \$pid"
-                        withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
-                            bat 'mvn spring-boot:run -Dserver.port=8989 &'
-
-    }
+   stage("Staging") {
+                   bat "pid=\$(lsof -i:8090 -t); kill -TERM \$pid " + "|| kill -KILL \$pid"
+                   withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
+                       bat 'mvn spring-boot:run'
+                   }
 
     stage ("test") {
             env.K6CLOUD_TOKEN="0e2bcf09026d2179120ca6768b0359e0e9347a4ceeec93734d6540ca105cfd45"
