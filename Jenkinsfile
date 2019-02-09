@@ -3,10 +3,6 @@ node {
   git 'https://github.com/ChickyD/spring-boot-sample'
  }
 
- stage('Archive') {
-  junit allowEmptyResults: true, testResults: '**/target/**/TEST*.xml'
- }
-
  stage("Staging") {
  timeout(time: 3, unit: 'MINUTES') {
    // replace it with your application name or make it easily loaded from pom.xml
