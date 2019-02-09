@@ -11,7 +11,6 @@ node {
    // NOTE : CREATE your deployemnt JOB, where it can take parameters whoch is the jar name to fetch from jenkins workspace
    build job: 'spring-boot-sample', parameters: [
     $class: 'StringParameterValue', name: 'jarName', value: jarName], wait: false
-   ]
    echo 'the application is being deployed ....'
    sleep time: 3, unit: 'MINUTES'
 }
