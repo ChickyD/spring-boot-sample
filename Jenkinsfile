@@ -3,10 +3,6 @@ node {
   git 'https://github.com/ChickyD/spring-boot-sample'
  }
 
- stage('Build') {
-  bat 'mvn -e clean install'
- }
-
  stage('Archive') {
   junit allowEmptyResults: true, testResults: '**/target/**/TEST*.xml'
  }
