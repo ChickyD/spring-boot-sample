@@ -12,6 +12,7 @@ node {
  }
 
  stage("Staging") {
+ timeout(time: 5, unit: 'MINUTES') {
    // replace it with your application name or make it easily loaded from pom.xml
    def jarName = "spring-boot-sample.jar"
    echo "the application is deploying ${jarName}"
@@ -20,7 +21,7 @@ node {
     [$class: 'StringParameterValue', name: 'jarName', value: jarName]
    ]
    echo 'the application is deployed !'
-
+}
  }
 
  stage("test") {
