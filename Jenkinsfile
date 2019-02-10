@@ -19,7 +19,7 @@ node {
  }
 
  stage("Done") {
-    echo "Application ${jarName} was perf. tested and results can be found at the K§ cloud."
+    echo "Application was perf. tested and results can be found at the K§ cloud."
  }
 
 }
